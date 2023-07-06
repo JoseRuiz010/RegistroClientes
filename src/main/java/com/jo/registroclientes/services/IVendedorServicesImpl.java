@@ -17,8 +17,6 @@ public class IVendedorServicesImpl implements IServiceGenerico<Vendedor, Long> {
 	@Autowired
 	private IVendedorRepository repo;
 
-
-
 	@Override
 	public List<Vendedor> getAll(){
 		return repo.findAll();
@@ -27,9 +25,8 @@ public class IVendedorServicesImpl implements IServiceGenerico<Vendedor, Long> {
 	@Override
 	public Vendedor get(Long id) {
 		Optional<Vendedor> vendedor= repo.findById(id);
-
 		if (!vendedor.isPresent()){
-			throw new EntityNotFoundException();
+			 throw new EntityNotFoundException();
 		}
 		return vendedor.get();
 	}
@@ -51,6 +48,4 @@ public class IVendedorServicesImpl implements IServiceGenerico<Vendedor, Long> {
 		Vendedor vendedor= get(aLong);
 		return repo.save(entity);
 	}
-
-
 }

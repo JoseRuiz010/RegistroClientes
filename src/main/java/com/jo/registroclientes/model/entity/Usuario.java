@@ -1,14 +1,13 @@
 package com.jo.registroclientes.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class Usuario {
 
@@ -17,4 +16,17 @@ public class Usuario {
 	private Long id;
 	private String username;
 	private String password;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Persona persona;
+
+	public Usuario(String username, String password, Persona persona) {
+		this.username = username;
+		this.password = password;
+		this.persona = persona;
+	}
+
+	public Usuario(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
 }
