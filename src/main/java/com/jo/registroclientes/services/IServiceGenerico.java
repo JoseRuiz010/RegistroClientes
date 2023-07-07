@@ -1,11 +1,13 @@
 package com.jo.registroclientes.services;
 
+import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
+
 import java.util.List;
 
 public interface IServiceGenerico <T,ID>{
-    List<T> getAll ();
-    T get(ID id);
-    T save(T entity);
-    T delete (ID id);
-    T update (ID id, T entity);
+    ResponseEntityDTO<List<T>> getAll ();
+    ResponseEntityDTO<T> get(ID id);
+    ResponseEntityDTO<T> save(T entity);
+    ResponseEntityDTO<T> delete (ID id);
+    ResponseEntityDTO<T> update (ID id, T entity);
 }

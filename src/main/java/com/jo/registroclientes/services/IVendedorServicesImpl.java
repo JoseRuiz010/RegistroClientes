@@ -3,6 +3,8 @@ package com.jo.registroclientes.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
+import com.jo.registroclientes.model.entity.Persona;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -18,34 +20,38 @@ public class IVendedorServicesImpl implements IServiceGenerico<Vendedor, Long> {
 	private IVendedorRepository repo;
 
 	@Override
-	public List<Vendedor> getAll(){
-		return repo.findAll();
+	public ResponseEntityDTO<List<Vendedor>> getAll(){
+		return  new ResponseEntityDTO<List<Vendedor>>(repo.findAll(),null,null);
 	}
 
 	@Override
-	public Vendedor get(Long id) {
+	public ResponseEntityDTO<Vendedor> get(Long id) {
 		Optional<Vendedor> vendedor= repo.findById(id);
 		if (!vendedor.isPresent()){
-			 throw new EntityNotFoundException();
+			return new ResponseEntityDTO<Vendedor>(null,"No se encontro el vendedor con el id ".concat(id.toString()),null);
 		}
-		return vendedor.get();
+		return new ResponseEntityDTO<Vendedor>(vendedor.get(),null,null);
 	}
 
 	@Override
-	public Vendedor save(Vendedor entity) {
-		return repo.save(entity);
+	public  ResponseEntityDTO<Vendedor> save(Vendedor entity) {
+		return new ResponseEntityDTO<Vendedor>(repo.save(entity),null,null);
 	}
 
 	@Override
-	public Vendedor delete(Long id) {
-		Vendedor vendedor = get(id);
+	public  ResponseEntityDTO<Vendedor> delete(Long id) {
+		Vendedor vendedor = get(id).getData();
 		repo.delete(vendedor);
-		return vendedor;
+		return new ResponseEntityDTO<Vendedor>(vendedor,null,"Se elimino el vendedor ".concat(vendedor.getName()));
 	}
 
 	@Override
-	public Vendedor update(Long aLong, Vendedor entity) {
-		Vendedor vendedor= get(aLong);
-		return repo.save(entity);
+	public  ResponseEntityDTO<Vendedor> update(Long aLong, Vendedor entity) {
+		Vendedor vendedor= get(aLong).getData();
+		vendedor.setName(entity.getName());
+		vendedor.setLastName(entity.getLastName());
+		vendedor.setEmail(entity.getEmail());
+		vendedor.setPhone(entity.getPhone());
+		return new ResponseEntityDTO<Vendedor>(repo.save(entity),null,null);
 	}
 }

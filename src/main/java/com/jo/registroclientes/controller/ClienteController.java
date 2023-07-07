@@ -1,5 +1,6 @@
 package com.jo.registroclientes.controller;
 
+import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
 import com.jo.registroclientes.model.entity.Cliente;
 import com.jo.registroclientes.model.entity.Vendedor;
 import com.jo.registroclientes.services.IClienteSericeImpl;
@@ -16,19 +17,19 @@ public class ClienteController {
 
 
     @GetMapping("/")
-    public List<Cliente> getAll(){
+    public ResponseEntityDTO <List<Cliente>> getAll(){
         return clienteService.getAll();
     }
     @GetMapping("/{id}")
-    public Cliente get(@PathVariable Long id){
+    public ResponseEntityDTO<Cliente> get(@PathVariable Long id){
         return clienteService.get(id);
     }
     @PostMapping("/")
-    public Cliente save(@RequestBody Cliente cliente){
+    public ResponseEntityDTO<Cliente> save(@RequestBody Cliente cliente){
         return clienteService.save(cliente);
     }
     @PutMapping("/{id}")
-    public Cliente update(@PathVariable(name = "id")Long id, @RequestBody Cliente cliente){
+    public  ResponseEntityDTO<Cliente> update(@PathVariable(name = "id")Long id, @RequestBody Cliente cliente){
         return clienteService.update(id,cliente);
     }
 }

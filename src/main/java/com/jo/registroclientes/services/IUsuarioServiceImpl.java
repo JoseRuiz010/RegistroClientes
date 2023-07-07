@@ -1,5 +1,7 @@
 package com.jo.registroclientes.services;
 
+import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
+import com.jo.registroclientes.model.entity.Cliente;
 import com.jo.registroclientes.model.entity.Usuario;
 import com.jo.registroclientes.repository.IUserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,37 +15,45 @@ public class IUsuarioServiceImpl implements IServiceGenerico<Usuario,Long>{
     @Autowired
     private IUserRepository userRepository;
     @Override
-    public List<Usuario> getAll() {
-        return userRepository.findAll();
+    public ResponseEntityDTO<List<Usuario>> getAll() {
+
+        return new ResponseEntityDTO<List<Usuario>>(userRepository.findAll(),null,null);
+
     }
 
     @Override
-    public Usuario get(Long aLong) {
+    public  ResponseEntityDTO<Usuario> get(Long aLong) {
         Optional<Usuario> usuario = userRepository.findById(aLong);
         if(!usuario.isPresent()){
-            throw  new EntityNotFoundException();
+            return new ResponseEntityDTO<Usuario>(null,"No se encontro el usuario con el id: ".concat(aLong.toString()),null);
         }
-        return usuario.get();
+        return new ResponseEntityDTO<Usuario>(usuario.get(),null,null);
     }
 
     @Override
-    public Usuario save(Usuario entity) {
-        return userRepository.save(entity);
+    public  ResponseEntityDTO<Usuario> save(Usuario entity)
+    {
+        return new ResponseEntityDTO<Usuario>( userRepository.save(entity),null,null);
     }
 
     @Override
-    public Usuario delete(Long aLong) {
-        Usuario user= get(aLong);
+    public ResponseEntityDTO<Usuario> delete(Long aLong) {
+        Usuario user= get(aLong).getData();
         userRepository.delete(user);
-        return user;
+        return new ResponseEntityDTO<Usuario>(user, null, "Se elimino el usuario ".concat(user.getUsername()));
     }
 
     @Override
-    public Usuario update(Long aLong, Usuario entity) {
-        return userRepository.save(entity);
+    public ResponseEntityDTO<Usuario> update(Long aLong, Usuario entity) {
+            Usuario user= userRepository.save(entity);
+        return  new ResponseEntityDTO<Usuario>(user, null, "Se creo el usuario ".concat(user.getUsername()));
     }
 
-    public Usuario getUserByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username,password).get();
+    public ResponseEntityDTO<Usuario> getUserByUsernameAndPassword(String username, String password) {
+        Optional<Usuario> user=  userRepository.findByUsernameAndPassword(username,password);
+        if(!user.isPresent()){
+            return  new ResponseEntityDTO<Usuario>(null,"Las credenciales son incorrectas", null);
+        }
+        return new ResponseEntityDTO<>(user.get(),null,"Se inicio session correctamente");
     }
 }
