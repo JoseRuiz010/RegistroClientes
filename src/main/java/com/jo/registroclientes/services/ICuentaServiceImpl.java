@@ -1,0 +1,54 @@
+package com.jo.registroclientes.services;
+
+import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
+import com.jo.registroclientes.model.entity.Cuenta;
+import com.jo.registroclientes.repository.ICuentaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+@Service
+public class ICuentaServiceImpl implements IServiceGenerico<Cuenta, Long> {
+
+    @Autowired
+    private ICuentaRepository cuentaRepository;
+
+    @Override
+    public ResponseEntityDTO<List<Cuenta>> getAll() {
+
+        return new ResponseEntityDTO<List<Cuenta>>(cuentaRepository.findAll(),null,null);
+    }
+
+    @Override
+    public ResponseEntityDTO<Cuenta> get(Long aLong) {
+        Optional<Cuenta> cuenta= cuentaRepository.findById(aLong);
+        if(!cuenta.isPresent()){
+            return  new ResponseEntityDTO<Cuenta>(null, "No se encontro la cuenta numero: ".concat(aLong.toString()), null);
+        }
+        return new ResponseEntityDTO<Cuenta>(cuenta.get(), null, null);
+    }
+
+    @Override
+    public ResponseEntityDTO<Cuenta> save(Cuenta entity) {
+        Cuenta cuenta= cuentaRepository.save(entity);
+
+        return new ResponseEntityDTO<Cuenta>(cuenta,null,null);
+    }
+
+    @Override
+    public ResponseEntityDTO<Cuenta> delete(Long aLong) {
+        Cuenta cuenta=get(aLong).getData();
+        cuentaRepository.delete(cuenta);
+
+        return  new ResponseEntityDTO<Cuenta>(cuenta,null,null);
+    }
+
+    @Override
+    public ResponseEntityDTO<Cuenta> update(Long aLong, Cuenta entity) {
+        Cuenta cuenta=get(aLong).getData();
+        cuenta.setEstado_cuenta(entity.getEstado_cuenta());
+        cuentaRepository.save(cuenta);
+        return new ResponseEntityDTO<Cuenta>(cuenta,null,null);
+    }
+}
