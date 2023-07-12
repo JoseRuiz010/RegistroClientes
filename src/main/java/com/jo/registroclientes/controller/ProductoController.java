@@ -4,6 +4,7 @@ import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
 import com.jo.registroclientes.model.entity.Cuenta;
 import com.jo.registroclientes.model.entity.Producto;
 import com.jo.registroclientes.services.IProductoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class ProductoController {
         return productoService.get(id);
     }
     @PostMapping("/")
-    public ResponseEntityDTO<Producto> save(@RequestBody Producto producto){
+    public ResponseEntityDTO<Producto> save(@Valid @RequestBody Producto producto){
         return productoService.save(producto);
     }
     @PutMapping("/{id}")

@@ -24,3 +24,4 @@ insert into producto (id, nombre, descripcion,precio, imagen,marca_id) values (n
 insert into producto (id, nombre, descripcion,precio, imagen,marca_id) values (null,"Coca cola 2L", "Coca Cola 2L", 900, null,4);
 insert into producto (id, nombre, descripcion,precio, imagen,marca_id) values (null,"Mirinda 2L", "Mirinda 2L", 500, null,5);
 insert into producto (id, nombre, descripcion,precio, imagen,marca_id) values (null,"Fanta 2L", "Fanta 2L", 950, null,2);
+

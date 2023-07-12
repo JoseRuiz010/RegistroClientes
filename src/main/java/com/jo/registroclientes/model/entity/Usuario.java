@@ -1,6 +1,7 @@
 package com.jo.registroclientes.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,9 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String username;
+	@NotBlank
 	private String password;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Persona persona;

@@ -1,9 +1,7 @@
 package com.jo.registroclientes.controller;
 
 import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
-import com.jo.registroclientes.model.entity.Cliente;
-import com.jo.registroclientes.model.entity.Cuenta;
-import com.jo.registroclientes.services.IClienteSericeImpl;
+import com.jo.registroclientes.model.entity.*;
 import com.jo.registroclientes.services.ICuentaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +30,14 @@ public class CuentaController {
     @PutMapping("/{id}")
     public  ResponseEntityDTO<Cuenta> update(@PathVariable(name = "id")Long id, @RequestBody Cuenta Cuenta){
         return cuentaService.update(id,Cuenta);
+    }
+    @PostMapping("/{id}/addline")
+    public ResponseEntityDTO<LineaDeCuenta> save(@PathVariable Long id, @RequestBody LineaDeCuentaSaldo lineaDeCuenta){
+
+        return  cuentaService.agregarLineaDeCuenta(id,lineaDeCuenta);
+    }
+    @PostMapping("/{id}/addlineaConProducto")
+    public ResponseEntityDTO<LineaDeCuenta> saveLineaConProducto(@PathVariable Long id, @RequestBody LineaDeCuentaConProducto lineaDeCuenta){
+        return  cuentaService.agregarLineaDeCuentaProducto(id,lineaDeCuenta);
     }
 }

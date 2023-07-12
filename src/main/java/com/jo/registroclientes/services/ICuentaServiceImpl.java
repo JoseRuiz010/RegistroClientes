@@ -2,7 +2,12 @@ package com.jo.registroclientes.services;
 
 import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
 import com.jo.registroclientes.model.entity.Cuenta;
+import com.jo.registroclientes.model.entity.LineaDeCuenta;
+import com.jo.registroclientes.model.entity.LineaDeCuentaConProducto;
+import com.jo.registroclientes.model.entity.LineaDeCuentaSaldo;
 import com.jo.registroclientes.repository.ICuentaRepository;
+import com.jo.registroclientes.repository.ILineaConProductoRepository;
+import com.jo.registroclientes.repository.ILineaConSaldoRpository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +18,10 @@ public class ICuentaServiceImpl implements IServiceGenerico<Cuenta, Long> {
 
     @Autowired
     private ICuentaRepository cuentaRepository;
-
+    @Autowired
+    private ILineaConSaldoRpository lineaConSaldoRpository;
+    @Autowired
+    private ILineaConProductoRepository lineaConProductoRepository;
     @Override
     public ResponseEntityDTO<List<Cuenta>> getAll() {
 
@@ -31,8 +39,7 @@ public class ICuentaServiceImpl implements IServiceGenerico<Cuenta, Long> {
 
     @Override
     public ResponseEntityDTO<Cuenta> save(Cuenta entity) {
-        Cuenta cuenta= cuentaRepository.save(entity);
-
+         Cuenta cuenta= cuentaRepository.save(entity);
         return new ResponseEntityDTO<Cuenta>(cuenta,null,null);
     }
 
@@ -51,4 +58,25 @@ public class ICuentaServiceImpl implements IServiceGenerico<Cuenta, Long> {
         cuentaRepository.save(cuenta);
         return new ResponseEntityDTO<Cuenta>(cuenta,null,null);
     }
+
+    public ResponseEntityDTO<LineaDeCuenta> agregarLineaDeCuenta(Long aLong, LineaDeCuentaSaldo linea) {
+       ResponseEntityDTO<Cuenta> cuenta= get(aLong);
+       if(cuenta.getData()==null){
+            return  new ResponseEntityDTO<LineaDeCuenta>(null, cuenta.getError(), cuenta.getMenssage());
+       }
+       LineaDeCuentaSaldo li = new LineaDeCuentaSaldo(cuenta.getData(),linea.getMonto(),linea.getDescripcion());
+       LineaDeCuenta newLine= lineaConSaldoRpository.save(li);
+        return new ResponseEntityDTO<LineaDeCuenta>(newLine,null,null);
+    }
+
+    public ResponseEntityDTO<LineaDeCuenta> agregarLineaDeCuentaProducto(Long aLong, LineaDeCuentaConProducto linea) {
+        ResponseEntityDTO<Cuenta> cuenta= get(aLong);
+        if(cuenta.getData()==null){
+            return  new ResponseEntityDTO<LineaDeCuenta>(null, cuenta.getError(), cuenta.getMenssage());
+        }
+        LineaDeCuentaConProducto li = new LineaDeCuentaConProducto(cuenta.getData(),linea.getCantidad(),linea.getProducto());
+        LineaDeCuenta newLine= lineaConProductoRepository.save(li);
+        return new ResponseEntityDTO<LineaDeCuenta>(newLine,null,null);
+    }
+
 }
