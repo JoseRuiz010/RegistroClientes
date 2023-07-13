@@ -15,7 +15,6 @@ public class CuentaController {
     @Autowired
     private ICuentaServiceImpl cuentaService;
 
-
     @GetMapping("/")
     public ResponseEntityDTO <List<Cuenta>> getAll(){
         return cuentaService.getAll();
@@ -34,7 +33,6 @@ public class CuentaController {
     }
     @PostMapping("/{id}/addline")
     public ResponseEntityDTO<LineaDeCuenta> save(@PathVariable Long id,@Valid @RequestBody LineaDeCuentaSaldo lineaDeCuenta){
-
         return  cuentaService.agregarLineaDeCuenta(id,lineaDeCuenta);
     }
     @PostMapping("/{id}/addlineaConProducto")

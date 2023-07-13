@@ -17,7 +17,6 @@ public class MarcaController {
     @Autowired
     private IMarcaSerViceImpl marcaService;
 
-
     @GetMapping("/")
     public ResponseEntityDTO <List<Marca>> getAll(){
         return marcaService.getAll();

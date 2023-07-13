@@ -16,7 +16,6 @@ public class ProductoController {
     @Autowired
     private IProductoService productoService;
 
-
     @GetMapping("/s")
     public ResponseEntityDTO <List<Producto>> getAll(){
         return productoService.getAll();

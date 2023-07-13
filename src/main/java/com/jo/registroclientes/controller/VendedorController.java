@@ -12,10 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("seller")
 public class VendedorController {
-
     @Autowired
     private IVendedorServicesImpl vendedorServices;
-
 
     @GetMapping("/")
     public ResponseEntityDTO<List<Vendedor>> getAll(){

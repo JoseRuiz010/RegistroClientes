@@ -15,7 +15,6 @@ public class UsuarioController {
     @Autowired
     private IUsuarioServiceImpl userrepository;
 
-
     @GetMapping("/")
     public ResponseEntityDTO<List<Usuario>> getAll(){
         return userrepository.getAll();
