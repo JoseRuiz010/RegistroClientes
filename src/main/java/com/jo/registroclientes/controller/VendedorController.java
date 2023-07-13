@@ -3,6 +3,7 @@ package com.jo.registroclientes.controller;
 import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
 import com.jo.registroclientes.model.entity.Vendedor;
 import com.jo.registroclientes.services.IVendedorServicesImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +22,15 @@ public class VendedorController {
       return vendedorServices.getAll();
     }
     @GetMapping("/{id}")
-    public ResponseEntityDTO<Vendedor> get(@PathVariable Long id){
+    public ResponseEntityDTO<Vendedor> get(@Valid @PathVariable Long id){
         return vendedorServices.get(id);
     }
     @PostMapping("/")
-    public ResponseEntityDTO<Vendedor> save(@RequestBody Vendedor vendedor){
+    public ResponseEntityDTO<Vendedor> save(@Valid @RequestBody Vendedor vendedor){
         return vendedorServices.save(vendedor);
     }
     @PutMapping("/{id}")
-    public ResponseEntityDTO<Vendedor> update(@PathVariable(name = "id")Long id, @RequestBody Vendedor vendedor){
+    public ResponseEntityDTO<Vendedor> update(@PathVariable(name = "id")Long id,@Valid @RequestBody Vendedor vendedor){
         return vendedorServices.update(id,vendedor);
     }
 

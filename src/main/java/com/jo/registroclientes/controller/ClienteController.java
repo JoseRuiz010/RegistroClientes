@@ -4,6 +4,7 @@ import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
 import com.jo.registroclientes.model.entity.Cliente;
 import com.jo.registroclientes.model.entity.Vendedor;
 import com.jo.registroclientes.services.IClienteSericeImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +26,11 @@ public class ClienteController {
         return clienteService.get(id);
     }
     @PostMapping("/")
-    public ResponseEntityDTO<Cliente> save(@RequestBody Cliente cliente){
+    public ResponseEntityDTO<Cliente> save(@Valid @RequestBody Cliente cliente){
         return clienteService.save(cliente);
     }
     @PutMapping("/{id}")
-    public  ResponseEntityDTO<Cliente> update(@PathVariable(name = "id")Long id, @RequestBody Cliente cliente){
+    public  ResponseEntityDTO<Cliente> update(@PathVariable(name = "id")Long id,@Valid @RequestBody Cliente cliente){
         return clienteService.update(id,cliente);
     }
 }

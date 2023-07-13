@@ -17,7 +17,7 @@ public class ProductoController {
     private IProductoService productoService;
 
 
-    @GetMapping("/")
+    @GetMapping("/s")
     public ResponseEntityDTO <List<Producto>> getAll(){
         return productoService.getAll();
     }

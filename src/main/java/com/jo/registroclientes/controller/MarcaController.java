@@ -5,6 +5,7 @@ import com.jo.registroclientes.model.entity.Marca;
 import com.jo.registroclientes.model.entity.Producto;
 import com.jo.registroclientes.services.IMarcaSerViceImpl;
 import com.jo.registroclientes.services.IProductoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +27,11 @@ public class MarcaController {
         return marcaService.get(id);
     }
     @PostMapping("/")
-    public ResponseEntityDTO<Marca> save(@RequestBody Marca Marca){
+    public ResponseEntityDTO<Marca> save(@Valid @RequestBody Marca Marca){
         return marcaService.save(Marca);
     }
     @PutMapping("/{id}")
-    public  ResponseEntityDTO<Marca> update(@PathVariable(name = "id")Long id, @RequestBody Marca Marca){
+    public  ResponseEntityDTO<Marca> update( @PathVariable(name = "id")Long id,@Valid @RequestBody Marca Marca){
         return marcaService.update(id,Marca);
     }
 }

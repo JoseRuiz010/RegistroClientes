@@ -3,6 +3,7 @@ package com.jo.registroclientes.controller;
 import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
 import com.jo.registroclientes.model.entity.*;
 import com.jo.registroclientes.services.ICuentaServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,20 +25,20 @@ public class CuentaController {
         return cuentaService.get(id);
     }
     @PostMapping("/")
-    public ResponseEntityDTO<Cuenta> save(@RequestBody Cuenta Cuenta){
+    public ResponseEntityDTO<Cuenta> save(@Valid @RequestBody Cuenta Cuenta){
         return cuentaService.save(Cuenta);
     }
     @PutMapping("/{id}")
-    public  ResponseEntityDTO<Cuenta> update(@PathVariable(name = "id")Long id, @RequestBody Cuenta Cuenta){
+    public  ResponseEntityDTO<Cuenta> update(@PathVariable(name = "id")Long id,@Valid @RequestBody Cuenta Cuenta){
         return cuentaService.update(id,Cuenta);
     }
     @PostMapping("/{id}/addline")
-    public ResponseEntityDTO<LineaDeCuenta> save(@PathVariable Long id, @RequestBody LineaDeCuentaSaldo lineaDeCuenta){
+    public ResponseEntityDTO<LineaDeCuenta> save(@PathVariable Long id,@Valid @RequestBody LineaDeCuentaSaldo lineaDeCuenta){
 
         return  cuentaService.agregarLineaDeCuenta(id,lineaDeCuenta);
     }
     @PostMapping("/{id}/addlineaConProducto")
-    public ResponseEntityDTO<LineaDeCuenta> saveLineaConProducto(@PathVariable Long id, @RequestBody LineaDeCuentaConProducto lineaDeCuenta){
+    public ResponseEntityDTO<LineaDeCuenta> saveLineaConProducto(@PathVariable Long id,@Valid @RequestBody LineaDeCuentaConProducto lineaDeCuenta){
         return  cuentaService.agregarLineaDeCuentaProducto(id,lineaDeCuenta);
     }
 }
