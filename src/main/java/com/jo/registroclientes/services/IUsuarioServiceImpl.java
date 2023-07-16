@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -55,5 +56,13 @@ public class IUsuarioServiceImpl implements IServiceGenerico<Usuario,Long>{
             return  new ResponseEntityDTO<Usuario>(null,"Las credenciales son incorrectas", null);
         }
         return new ResponseEntityDTO<>(user.get(),null,"Se inicio session correctamente");
+    }
+
+    public String login(Usuario user) {
+        Optional<Usuario> u= userRepository.findByUsername(user.getUsername());
+        if(u.isPresent()){
+            return  "Basic ".concat(Base64.getEncoder().encodeToString(u.get().getUsername().concat(":").concat(u.get().getPassword()).getBytes()));
+        }
+        return "error";
     }
 }

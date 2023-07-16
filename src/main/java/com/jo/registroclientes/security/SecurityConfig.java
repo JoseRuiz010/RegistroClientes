@@ -27,19 +27,20 @@ public class SecurityConfig {
                 .and().csrf().disable()
                 .authorizeHttpRequests((authorize)->
                         authorize
+                                //.anyRequest().permitAll()
                                 //.anyRequest()
                         //.permitAll()
                         // .denyAll()
                         // .authenticated()
                        // .hasAuthority("ADMIN")
                           //      .hasRole("ROLE_ADMIN")
+                                .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/products/").authenticated()
                                 .requestMatchers("/user/").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/products/").hasAuthority("READ_ONLY")
                                 .requestMatchers("/products/").permitAll()
 
-
-                );
+               );
 
         return http.build();
     }
