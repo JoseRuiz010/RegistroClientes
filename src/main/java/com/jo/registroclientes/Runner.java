@@ -27,7 +27,7 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-            this.authorityRepository.saveAll(List.of(
+         /*   this.authorityRepository.saveAll(List.of(
                     new Authority(Authorities.ADMIN),
                     new Authority(Authorities.USER),
                     new Authority(Authorities.READ_ONLY)
@@ -39,6 +39,6 @@ public class Runner implements CommandLineRunner {
                     new Usuario("carlos010", encoder.encode("1234"),List.of(this.authorityRepository.findByName(Authorities.USER).get())),
                     new Usuario("zulema010", encoder.encode("1234"),List.of(this.authorityRepository.findByName(Authorities.READ_ONLY).get()))
 
-            ));
+            ));*/
     }
 }
