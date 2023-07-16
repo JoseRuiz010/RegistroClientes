@@ -2,6 +2,7 @@ package com.jo.registroclientes.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,9 +23,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests((req)->req.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
+        http.httpBasic()
+                .and().csrf().disable()
+                .authorizeHttpRequests((authorize)->
+                        authorize
+                                //.anyRequest()
+                        //.permitAll()
+                        // .denyAll()
+                        // .authenticated()
+                       // .hasAuthority("ADMIN")
+                          //      .hasRole("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/products/").authenticated()
+                                .requestMatchers("/user/").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST,"/products/").hasAuthority("READ_ONLY")
+                                .requestMatchers("/products/").permitAll()
+
+
+                );
 
         return http.build();
     }
