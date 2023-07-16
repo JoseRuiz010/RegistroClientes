@@ -9,7 +9,7 @@ insert into cliente (persona_id) values (1)
 
 insert into usuario (id,persona_id,username,password) values (null,1,'carlos','1234')
 insert into usuario (id,persona_id,username,password) values (null,2,'Zuli','1234')
-insert into usuario (id,persona_id,username,password) values (null,3,'Carlos','1234')
+insert into usuario (id,persona_id,username,password) values (null,3,'Gareca','1234')
 
 
 insert into marca (id, nombre) values (null,"Pepsi");

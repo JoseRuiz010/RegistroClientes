@@ -7,6 +7,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -24,10 +29,9 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+  /*  @Bean
     public InMemoryUserDetailsManager userDetailsManager(){
-        UserDetails userDetails= User.withDefaultPasswordEncoder()
-                .username("Jose")
+        UserDetails userDetails= User.withUsername("Jose")
                 .password("1234")
                 .roles("user")
                 .build();
@@ -40,6 +44,9 @@ public class SecurityConfig {
         System.out.println("Admin Password is : ".concat(userDetailsAdmin.getPassword()));
 
         return  new InMemoryUserDetailsManager(userDetails,userDetailsAdmin);
-    }
-
+    }*/
+    @Bean
+   public  PasswordEncoder passwordEncoder(){
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+}
 }
