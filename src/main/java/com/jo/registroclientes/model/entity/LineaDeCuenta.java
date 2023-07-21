@@ -1,5 +1,6 @@
 package com.jo.registroclientes.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class LineaDeCuenta implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private Double subtotal;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate fecha;
     @NotNull(message = "La cuenta es requerida")
     @JsonIgnore

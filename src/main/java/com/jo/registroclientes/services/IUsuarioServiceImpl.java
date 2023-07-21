@@ -1,6 +1,7 @@
 package com.jo.registroclientes.services;
 
 import com.jo.registroclientes.model.dtos.ResponseEntityDTO;
+import com.jo.registroclientes.model.dtos.TokenDTO;
 import com.jo.registroclientes.model.entity.Cliente;
 import com.jo.registroclientes.model.entity.Usuario;
 import com.jo.registroclientes.repository.IUserRepository;
@@ -58,11 +59,12 @@ public class IUsuarioServiceImpl implements IServiceGenerico<Usuario,Long>{
         return new ResponseEntityDTO<>(user.get(),null,"Se inicio session correctamente");
     }
 
-    public String login(Usuario user) {
+    public ResponseEntityDTO<TokenDTO> login(Usuario user) {
         Optional<Usuario> u= userRepository.findByUsername(user.getUsername());
         if(u.isPresent()){
-            return  "Basic ".concat(Base64.getEncoder().encodeToString(u.get().getUsername().concat(":").concat(u.get().getPassword()).getBytes()));
+            String token = "Basic ".concat(Base64.getEncoder().encodeToString(u.get().getUsername().concat(":").concat(u.get().getPassword()).getBytes()));
+            return  new ResponseEntityDTO<TokenDTO>(new TokenDTO(token),null,null);
         }
-        return "error";
+        return new ResponseEntityDTO<TokenDTO>(null,"Error en las credenciales",null);
     }
 }

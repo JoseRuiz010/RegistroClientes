@@ -79,4 +79,9 @@ public class ICuentaServiceImpl implements IServiceGenerico<Cuenta, Long> {
         return new ResponseEntityDTO<LineaDeCuenta>(newLine,null,null);
     }
 
+    public ResponseEntityDTO<List<Cuenta>> cuentasByClient(Long id){
+
+        return  new ResponseEntityDTO<List<Cuenta>>(cuentaRepository.findCuentasByClient(id),null,null);
+    }
+
 }

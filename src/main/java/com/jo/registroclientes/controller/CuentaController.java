@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("cuenta")
 public class CuentaController {
@@ -32,11 +33,17 @@ public class CuentaController {
         return cuentaService.update(id,Cuenta);
     }
     @PostMapping("/{id}/addline")
-    public ResponseEntityDTO<LineaDeCuenta> save(@PathVariable Long id,@Valid @RequestBody LineaDeCuentaSaldo lineaDeCuenta){
+    public ResponseEntityDTO<LineaDeCuenta> save(@PathVariable Long id, @RequestBody LineaDeCuentaSaldo lineaDeCuenta){
         return  cuentaService.agregarLineaDeCuenta(id,lineaDeCuenta);
     }
     @PostMapping("/{id}/addlineaConProducto")
-    public ResponseEntityDTO<LineaDeCuenta> saveLineaConProducto(@PathVariable Long id,@Valid @RequestBody LineaDeCuentaConProducto lineaDeCuenta){
+    public ResponseEntityDTO<LineaDeCuenta> saveLineaConProducto(@PathVariable Long id, @RequestBody LineaDeCuentaConProducto lineaDeCuenta){
         return  cuentaService.agregarLineaDeCuentaProducto(id,lineaDeCuenta);
     }
+
+    @GetMapping("/client/{id}")
+    public ResponseEntityDTO<List<Cuenta>> getCuentasByClient(@PathVariable Long id){
+        return cuentaService.cuentasByClient(id);
+    }
+
 }

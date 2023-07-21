@@ -1,5 +1,6 @@
 package com.jo.registroclientes.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jo.registroclientes.model.enums.Estado_Cuenta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class Cuenta implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "La fecha es requerida")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaInicio;
     private LocalDate fechafin;
     private Double MontoFinal;
